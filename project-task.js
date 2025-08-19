@@ -31,9 +31,11 @@ const products = [
 /*
 🔹 Task 1: Filter Products by Availability
 
+
 Create a function `filterProducts` that accepts:
 - an array of products
 - a callback function
+
 
 The callback should determine which products to include.
 Example: filter by availability or price threshold.
@@ -44,6 +46,12 @@ Step-by-Step:
 3. Return the filtered result.
 */
 
+function filterProducts(products, callback) {
+  return products.filter(callback);
+}
+
+const availableProducts = products.filter((neededTech) => !neededTech.inStock);
+console.log(availableProducts);
 
 /*
 🔹 Task 2: Transform Product Names
@@ -55,6 +63,9 @@ Step-by-Step:
 2. Extract and transform the `name` property to uppercase.
 3. Store the result in a new variable.
 */
+map(products, (product) => product.name.toUpperCase());
+const uppercasedNames = products.map((product) => product.name.toUpperCase());
+console.log(uppercasedNames);
 
 
 /*
@@ -70,6 +81,16 @@ Step-by-Step:
 3. Use this returned function inside a `map()` call to apply discounts to all products.
 */
 
+function applyDiscount(discountPercent) {
+  return function (product) {
+    const discountAmount = product.price * (discountPercent / 100);
+    return { ...product, discountedPrice: product.price - discountAmount };
+  };
+}
+const discount10 = applyDiscount(10);
+const discountedProducts = products.map(discount10);
+console.log(discountedProducts);
+
 
 /*
 🔹 Task 4: Calculate Total Inventory Value
@@ -81,13 +102,17 @@ Step-by-Step:
 2. Add only the prices of products where `inStock` is true.
 3. Store the total in a new variable.
 */
+const totalValueInStock = products.reduce((total, product) => {
+  return product.inStock ? total + product.price : total;
+}, 0);
+console.log(totalValueInStock);
 
 
 // ============================================
 // 🧪 Console Test Your Work
 // ============================================
 
-// console.log("Filtered products:", ...);
+//console.log("Filtered products:", ...);
 // console.log("Uppercased names:", ...);
 // console.log("Discounted products:", ...);
 // console.log("Total value in stock:", ...);
